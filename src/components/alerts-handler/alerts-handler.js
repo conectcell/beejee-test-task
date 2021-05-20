@@ -23,7 +23,7 @@ const AlertsHandler = ({children, success, error, commonHideSuccess, commonHideE
 
 
     const showError = () => {
-        if(typeof error == 'string') return (
+        if(typeof error === 'string') return (
             <div className="big-alert alert alert-danger">
                 {error}
             </div>

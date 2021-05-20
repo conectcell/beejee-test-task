@@ -60,7 +60,7 @@ const TaskRow = ({id, username, email, text, status, number, loggedIn, updateFun
 
         service.editTask(id, form).then(({status, message}) =>
         {
-            if (status == "ok")
+            if (status === "ok")
             {
                 commonShowSuccess("Информация сохранена");
                 commonShowSuccess("Информация сохранена");
@@ -79,7 +79,7 @@ const TaskRow = ({id, username, email, text, status, number, loggedIn, updateFun
                     }
                 }
 
-                if(message.token && message.token == "Токен истёк") {
+                if(message.token && message.token === "Токен истёк") {
                     service.clearToken();
                     authLogout();
                 }

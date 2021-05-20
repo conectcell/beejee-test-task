@@ -49,7 +49,7 @@ const RegularInput = ({name, label, placeholder, type = 'text', value, errorText
     return (
         <div className="form-group">
             <label htmlFor={name}>{label}</label>
-            {type == 'select' ? renderSelect() : renderInput()}
+            {type === 'select' ? renderSelect() : renderInput()}
             <small id={`${name}help`} className="form-text text-danger">{errorText}</small>
         </div>
     );

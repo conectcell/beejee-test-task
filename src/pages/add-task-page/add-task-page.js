@@ -66,7 +66,7 @@ const AddTaskPage = ({service, commonShowLoader, commonHideLoader, commonShowSuc
         commonShowLoader();
         service.addTask(form).then(({status, message}) =>
         {
-            if (status == "ok")
+            if (status === "ok")
             {
                 commonShowSuccess("Задача успешно добавлена");
                 setTimeout(() => history.push("/"), 2000);

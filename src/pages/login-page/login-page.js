@@ -62,7 +62,7 @@ const LoginPage = ({service, loggedIn, commonShowLoader, commonHideLoader, commo
 
         service.login(form).then(({status, message}) =>
         {
-            if (status == "ok")
+            if (status === "ok")
             {
                 commonShowSuccess("Вы вошли в систему");
                 service.setToken(message.token)
