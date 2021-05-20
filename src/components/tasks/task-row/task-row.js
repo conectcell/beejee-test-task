@@ -106,20 +106,17 @@ const TaskRow = ({id, username, email, text, status, number, loggedIn, updateFun
     }
 
     return (
-        <>
-            <tr key={`task-${id}`}>
-                <td scope="col">{number}</td>
-                <td scope="col">{username}</td>
-                <td scope="col">{email}</td>
-                <td scope="col">{text}</td>
-                <td scope="col">{statuses[status]}</td>
-                {loggedIn && <td scope="col">
-                    <button onClick={() => setShowEdit(!showEdit)} className="btn btn-info">Редактировать</button>
-                    {showEdit && editRow()}
-                </td>}
-            </tr>
-
-        </>
+        <tr key={`task-${id}`}>
+            <td>{number}</td>
+            <td>{username}</td>
+            <td>{email}</td>
+            <td>{text}</td>
+            <td>{statuses[status]}</td>
+            {loggedIn && <td>
+                <button onClick={() => setShowEdit(!showEdit)} className="btn btn-info">Редактировать</button>
+                {showEdit && editRow()}
+            </td>}
+        </tr>
     );
 };
 

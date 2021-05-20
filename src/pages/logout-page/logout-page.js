@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import compose from "../../utlis/compose";
 import {withService} from "../../components/hoc-helpers";
 import {connect} from "react-redux";

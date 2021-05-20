@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {commonHideError, commonHideSuccess} from "../../redux/actions/common-actions";
+
 const AlertsHandler = ({children, success, error, commonHideSuccess, commonHideError}) =>
 {
 
@@ -10,7 +11,7 @@ const AlertsHandler = ({children, success, error, commonHideSuccess, commonHideE
                 commonHideError();
             }, 2000)
         }
-    }, [error])
+    }, [error, commonHideError])
 
 
     useEffect(() => {
@@ -19,7 +20,7 @@ const AlertsHandler = ({children, success, error, commonHideSuccess, commonHideE
                 commonHideSuccess();
             },2000)
         }
-    }, [success])
+    }, [success, commonHideSuccess])
 
 
     const showError = () => {

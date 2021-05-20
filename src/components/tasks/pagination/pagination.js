@@ -19,10 +19,9 @@ const Pagination = ({total, perPage = 3, page = 1, changePage}) =>
         }
         setPages(pagesArray)
 
-    }, [])
+    }, [page, perPage, total])
 
     if (total <= perPage) return null;
-
 
     return (
         <div className="float-right">
@@ -34,7 +33,7 @@ const Pagination = ({total, perPage = 3, page = 1, changePage}) =>
                             let className = `page-link ${i === page && 'active'}`
                             return (
                                 <li key={`paginator-page-key-${i}`} className="page-item">
-                                    <a className={className} onClick={() => {if (i != page) changePage(i);}}>{i}</a>
+                                    <button className={className} onClick={() => {if (i !== page) changePage(i)}}>{i}</button>
                                 </li>
                             )
                         })

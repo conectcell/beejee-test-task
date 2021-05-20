@@ -23,12 +23,6 @@ const TasksListPage = ({service, loggedIn, commonHideLoader, commonShowLoader, c
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState(0);
 
-
-    useEffect(() =>
-    {
-        getData();
-    }, [])
-
     const getData = (p = page, s = sort) =>
     {
 
@@ -56,6 +50,13 @@ const TasksListPage = ({service, loggedIn, commonHideLoader, commonShowLoader, c
         });
     }
 
+    useEffect(() =>
+    {
+        getData();
+    }, [])
+
+
+
     const renderNoTasks = () =>
     {
         return (
@@ -68,7 +69,7 @@ const TasksListPage = ({service, loggedIn, commonHideLoader, commonShowLoader, c
         return (
             <div className="table-responsive">
                 <TasksSorter value={sort} onChange={(val) => {
-                    if(val != sort){
+                    if(val !== sort){
                         getData(page, val)
 
                     }

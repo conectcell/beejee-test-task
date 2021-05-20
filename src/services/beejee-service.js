@@ -38,7 +38,7 @@ export default class BeejeeService
         const res = await fetch(`${this._apiBase}${url}${addDeveloper ? '?developer=ykemer' : ''}`, toSend);
 
         if (!res.ok) {
-            throw new Error(`Could not fetch ${url}` + `, received ${res.status}`)
+            throw new Error(`Could not fetch ${url}, received ${res.status}`)
         }
         return await res.json();
     };

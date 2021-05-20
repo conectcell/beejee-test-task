@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import  {useState} from 'react';
 import {authLogin, authLogout} from "../../redux/actions/auth-actions";
 import {connect} from "react-redux";
 

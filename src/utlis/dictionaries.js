@@ -1,4 +1,4 @@
-export default {
+const dictionaries = {
     statuses: {
         '0': "задача не выполнена",
         '1': "задача не выполнена, отредактирована админом",
@@ -47,4 +47,5 @@ export default {
             sort_direction: 'desc'
         }
     }
-}
+};
+export default dictionaries;
