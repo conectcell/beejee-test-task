@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Layout from "../layout/layout";
 
 
-import {TasksListPage, LoginPage, LogoutPage, AddTaskPage, EditTaskPage} from '../../pages'
+import {TasksListPage, LoginPage, LogoutPage, AddTaskPage} from '../../pages'
 
 
 const AppRouter = () =>
@@ -29,11 +29,6 @@ const AppRouter = () =>
                         component={AddTaskPage}/>
 
 
-                    <Route path="/edit/:id"
-                           render={({ match }) => {
-                               const { id } = match.params;
-                               return <EditTaskPage id={id} />
-                           }}/>
 
 
                     <Route render={() => <h2>Page not found</h2>} />
