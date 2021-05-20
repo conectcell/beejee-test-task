@@ -28,7 +28,7 @@ const Form = ({
             }
         }
         setState(newState);
-    }, [errors,state])
+    }, [errors])
 
     const changeInputValue = (name, value, validated) =>
     {

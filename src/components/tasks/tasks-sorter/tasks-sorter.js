@@ -13,7 +13,7 @@ const TasksSorter = ({onChange, value = 0}) =>
                 {Object.keys(sortTypes).map(i => {
                     const {name} = sortTypes[i];
                     return(
-                        <option value={i}>{name}</option>
+                        <option value={i} key={`task-sorter-${i}-${name}`}>{name}</option>
                     )
                 })}
             </select>
