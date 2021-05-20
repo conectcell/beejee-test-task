@@ -8,7 +8,8 @@ Some data could be moved into redux. For example list of tasks.
 
 ## Design is awful and markup is disgusting. I know it
 
-##Also I would like to remove as many warning as possible
+##Also I would like to remove as many warnings as possible
 
 
-I wanted to make as many small reusable components as possible.  
+If I had more time I would like to create as many small reusable components as possible.
+In SOLID the most usable and good principle is Single Responsibility Principle. So I would like to make components that do only one thing.
