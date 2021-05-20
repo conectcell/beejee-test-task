@@ -1,0 +1,8 @@
+.page-link{
+    cursor: pointer;
+}
+
+.active{
+    background-color: #007bff;
+    color: #fff;
+}
