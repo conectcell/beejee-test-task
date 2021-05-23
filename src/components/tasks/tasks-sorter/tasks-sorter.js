@@ -10,9 +10,10 @@ const TasksSorter = ({onChange, value = 0}) =>
     return (
         <div className="col-md-6 col-sm-12 float-right sorter">
             <select className="form-control" value={value} onChange={event => onChange(event.target.value)}>
-                {Object.keys(sortTypes).map(i => {
+                {Object.keys(sortTypes).map(i =>
+                {
                     const {name} = sortTypes[i];
-                    return(
+                    return (
                         <option value={i} key={`task-sorter-${i}-${name}`}>{name}</option>
                     )
                 })}

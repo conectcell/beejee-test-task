@@ -33,7 +33,8 @@ const Pagination = ({total, perPage = 3, page = 1, changePage}) =>
                             let className = `page-link ${i === page && 'active'}`
                             return (
                                 <li key={`paginator-page-key-${i}`} className="page-item">
-                                    <button className={className} onClick={() => {if (i !== page) changePage(i)}}>{i}</button>
+                                    <button className={className}
+                                            onClick={() => {if (i !== page) changePage(i)}}>{i}</button>
                                 </li>
                             )
                         })

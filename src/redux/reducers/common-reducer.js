@@ -1,16 +1,21 @@
 import {
-    SHOW_ERROR,
-    SHOW_LOADER,
-    HIDE_LOADER,
     HIDE_ERROR,
-    SHOW_SUCCESS,
+    HIDE_FORM_LOADER,
+    HIDE_LOADER,
     HIDE_SUCCESS,
+    REDIRECT,
+    SHOW_ERROR,
+    SHOW_FORM_LOADER,
+    SHOW_LOADER,
+    SHOW_SUCCESS
 } from '../action-types';
 
 const initialState = {
     globalError: null,
     globalSuccess: null,
     loading: false,
+    formLoading: false,
+    redirect: null,
 };
 
 const commonReducer = (state = initialState, action) => {
@@ -44,6 +49,21 @@ const commonReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
+            };
+        case SHOW_FORM_LOADER:
+            return {
+                ...state,
+                formLoading: true,
+            };
+        case HIDE_FORM_LOADER:
+            return {
+                ...state,
+                formLoading: false,
+            };
+        case REDIRECT:
+            return {
+                ...state,
+                redirect: action.data,
             };
         default:
             return state;

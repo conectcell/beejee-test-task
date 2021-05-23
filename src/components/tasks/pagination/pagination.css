@@ -1,8 +1,8 @@
-.page-link{
+.page-link {
     cursor: pointer;
 }
 
-.active{
+.active {
     background-color: #007bff;
     color: #fff;
 }

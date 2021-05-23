@@ -1,18 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
-import {
-    commonHideLoader,
-    commonShowError,
-    commonShowLoader,
-    commonShowSuccess
-} from "../../redux/actions/common-actions";
 
 import Form from "../../components/forms/form";
 import compose from "../../utlis/compose";
 import {withService} from "../../components/hoc-helpers";
-import {authLogin} from "../../redux/actions/auth-actions";
-import LoadingHanler from "../../components/loading-handler/loading-handler";
+
+import {sagaLogin} from "../../redux/actions/saga-actions";
 
 const inputs = [
 
@@ -45,64 +39,28 @@ const initialState = {
 };
 
 
-const LoginPage = ({service, loggedIn, commonShowLoader, commonHideLoader, commonShowSuccess, commonShowError, authLogin}) =>
+const LoginPage = ({loggedIn, sagaLogin, errors}) =>
 {
-
-    const [errors, setErrors] = useState({});
-
     if (loggedIn) return <Redirect to="/"/>
 
-    const createTask = ({username, password}) =>
+    const loginAction = ({username, password}) =>
     {
         let form = new FormData();
         form.append("username", username);
         form.append("password", password);
 
-        commonShowLoader();
-
-        service.login(form).then(({status, message}) =>
-        {
-            if (status === "ok")
-            {
-                commonShowSuccess("Вы вошли в систему");
-                service.setToken(message.token)
-                setTimeout(()=> authLogin(), 1000);
-            } else
-            {
-                commonHideLoader();
-                const thisErrors = {...message};
-
-                const formErrors = {};
-                for (let {name} of inputs)
-                {
-                    if (thisErrors[name])
-                    {
-                        formErrors[name] = thisErrors[name];
-                        delete thisErrors[name];
-                    }
-                }
-
-                setErrors(formErrors);
-                if (Object.keys(thisErrors).length > 0) commonShowError(thisErrors);
-
-            }
-        });
+        sagaLogin(form);
     }
 
     return (
-        <LoadingHanler>
-            <Form action={createTask} inputs={inputs} initialState={initialState} errors={errors} buttonText="Авторизация" header="Вход в систему"/>
-        </LoadingHanler>
+        <Form action={loginAction} inputs={inputs} initialState={initialState} errors={errors} buttonText="Авторизация" header="Вход в систему"/>
     );
 };
 
-const mapStateToProps = state =>
-{
-    return {loggedIn: state.auth.loggedIn}
-}
+const mapStateToProps = state => ({loggedIn: state.auth.loggedIn, errors: state.formErrors.loginFormErrors})
 
 export default compose(
-    connect(mapStateToProps, {commonShowLoader, commonHideLoader, commonShowSuccess, commonShowError, authLogin}),
+    connect(mapStateToProps, {sagaLogin}),
     withService()
 )(LoginPage);
 

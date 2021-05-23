@@ -3,18 +3,14 @@ import {Redirect} from "react-router-dom";
 import compose from "../../utlis/compose";
 import {withService} from "../../components/hoc-helpers";
 import {connect} from "react-redux";
-import {authLogout} from "../../redux/actions/auth-actions";
+import {sagaLogout} from "../../redux/actions/saga-actions";
 
 
-const LogoutPage = ({service, loggedIn, authLogout}) =>
+const LogoutPage = ({loggedIn, sagaLogout}) =>
 {
 
 
-    useState(() =>
-    {
-        service.clearToken();
-        setTimeout(()=> authLogout(), 1000);
-    }, []);
+    useState(() => sagaLogout(), []);
 
     if(!loggedIn) return <Redirect to="/"/>
 
@@ -33,5 +29,5 @@ const mapStateToProps = state => {
 }
 export default compose(
     withService(),
-    connect(mapStateToProps, {authLogout})
+    connect(mapStateToProps, {sagaLogout})
 )(LogoutPage);

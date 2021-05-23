@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import RegularInput from "../inputs/regular-input";
 import Spinner from "../../spinner";
+import {connect} from "react-redux";
 
 
 const Form = ({
@@ -10,7 +11,7 @@ const Form = ({
                   header,
                   buttonText,
                   errors,
-                  loading = false
+                  loading
               }) =>
 {
 
@@ -68,18 +69,29 @@ const Form = ({
         );
     });
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        action(state)
+    }
+
 
     return (
         <div>
             {header && <h3>{header}</h3>}
-            {renderInputs}
-            {loading ? <Spinner/> : <button
-                className="btn btn-primary float-right"
-                disabled={!state.validated}
-                onClick={() => action(state)}
-            >{buttonText}</button>}
+            <form onSubmit={handleSubmit}>
+                {renderInputs}
+                {loading ? <Spinner/> : <input
+                    className="btn btn-primary float-right"
+                    disabled={!state.validated}
+                    type="submit"
+                    value={buttonText}
+                />}
+            </form>
+
         </div>
     );
 };
 
-export default Form;
+const mapStateToProps = state => ({loading: state.common.formLoading});
+
+export default connect(mapStateToProps, null)(Form);

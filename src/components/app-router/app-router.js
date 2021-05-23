@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Layout from "../layout/layout";
 
 
-import {TasksListPage, LoginPage, LogoutPage, AddTaskPage} from '../../pages'
+import {AddTaskPage, LoginPage, LogoutPage, TasksListPage} from '../../pages'
 
 
 const AppRouter = () =>
@@ -15,7 +15,7 @@ const AppRouter = () =>
                 <Switch>
                     <Route path="/"
                            component={TasksListPage}
-                           exact />
+                           exact/>
                     <Route
                         path="/login"
                         component={LoginPage}/>
@@ -29,9 +29,7 @@ const AppRouter = () =>
                         component={AddTaskPage}/>
 
 
-
-
-                    <Route render={() => <h2>Page not found</h2>} />
+                    <Route render={() => <h2>Page not found</h2>}/>
                 </Switch>
             </Layout>
         </Router>

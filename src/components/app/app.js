@@ -13,7 +13,6 @@ import './app.css';
 import AppRouter from "../app-router";
 
 
-
 const service = new BeejeeService();
 
 const App = () =>

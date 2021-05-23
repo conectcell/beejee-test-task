@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
+import {connect} from "react-redux";
+
+
 import {dictionaries} from "../../../utlis";
 import Form from "../../forms/form";
-import LoadingHanler from "../../loading-handler/loading-handler";
+import LoadingHandler from "../../handlers/loading-handler/loading-handler";
 import './task-row.css'
 import compose from "../../../utlis/compose";
-import {connect} from "react-redux";
-import {
-    commonShowError,
-    commonShowSuccess
-} from "../../../redux/actions/common-actions";
+
 import {withService} from "../../hoc-helpers";
-import {authLogout} from "../../../redux/actions/auth-actions";
+import {sagaEditTask} from "../../../redux/actions/saga-actions";
 
 const statuses = dictionaries.statuses;
 
@@ -43,64 +42,34 @@ const initialState = {
 };
 
 
-const TaskRow = ({id, username, email, text, status, number, loggedIn, updateFunction, commonShowSuccess, commonShowError, service, authLogout}) =>
+const TaskRow = ({id, username, email, text, status, number, loggedIn, service, errors, sagaEditTask}) =>
 {
 
     const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState({});
     const [showEdit, setShowEdit] = useState(false);
 
-    const createTask = ({text, status}) => {
+    const updateTask = ({text, status}) =>
+    {
         setLoading(true)
 
         let form = new FormData();
         form.append("text", text);
         form.append("status", status);
         form.append("token", service.getToken());
-
-        service.editTask(id, form).then(({status, message}) =>
-        {
-            if (status === "ok")
-            {
-                commonShowSuccess("Информация сохранена");
-                commonShowSuccess("Информация сохранена");
-                updateFunction();
-            } else
-            {
-                setLoading(false)
-                const errors = {...message};
-                const formErrors = {};
-                for (let {name} of inputs)
-                {
-                    if (errors[name])
-                    {
-                        formErrors[name] = errors[name];
-                        delete errors[name];
-                    }
-                }
-
-                if(message.token && message.token === "Токен истёк") {
-                    service.clearToken();
-                    authLogout();
-                }
-
-                setErrors(formErrors);
-                if (Object.keys(errors).length > 0) commonShowError(errors);
-
-            }
-        });
+        sagaEditTask(id, form)
     }
 
 
-
-    const editRow = () => {
+    const editRowRender = () =>
+    {
         initialState.status = status;
         initialState.text = text;
-        return(
-            <div className="task-edit-row">
-                <LoadingHanler>
-                    <Form loading={loading} action={createTask} inputs={inputs} initialState={initialState} errors={errors} buttonText="Сохранить" header="Добавление задачи" horizontal={true}/>
-                </LoadingHanler>
+        return (
+            <div className="task-edit-row" key={`task-editor-${id}`}>
+                <LoadingHandler>
+                    <Form loading={loading} action={updateTask} inputs={inputs} initialState={initialState}
+                          errors={errors} buttonText="Сохранить" header="Добавление задачи" horizontal={true}/>
+                </LoadingHandler>
             </div>
         )
     }
@@ -114,13 +83,15 @@ const TaskRow = ({id, username, email, text, status, number, loggedIn, updateFun
             <td>{statuses[status]}</td>
             {loggedIn && <td>
                 <button onClick={() => setShowEdit(!showEdit)} className="btn btn-info">Редактировать</button>
-                {showEdit && editRow()}
+                {showEdit && editRowRender()}
             </td>}
         </tr>
     );
 };
 
+const mapStateToProps = state => ({errors: state.formErrors.editTaskFormErrors})
+
 export default compose(
-    connect(null, {commonShowSuccess,  commonShowError, authLogout}),
+    connect(mapStateToProps, {sagaEditTask}),
     withService()
 )(TaskRow);

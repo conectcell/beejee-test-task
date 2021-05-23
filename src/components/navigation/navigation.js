@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {sagaLogout} from "../../redux/actions/saga-actions";
 
-const Navigation = ({loggedIn}) =>
+const Navigation = ({loggedIn, sagaLogout}) =>
 {
     return (
         <nav className="navbar navbar-expand-xl navbar-dark bg-dark" aria-label="Sixth navbar example">
@@ -17,15 +18,17 @@ const Navigation = ({loggedIn}) =>
                         <li className="nav-item">
                             <Link className="nav-link" aria-current="page" to="/add">Добавить задачу</Link>
                         </li>
-                        {!loggedIn &&  <li className="nav-item"><Link className="nav-link" to="/login">Авторизация</Link></li>}
-                        {loggedIn &&  <li className="nav-item"><Link className="nav-link" to="/logout">Выход</Link></li>}
+                        {!loggedIn &&
+                        <li className="nav-item"><Link className="nav-link" to="/login">Авторизация</Link></li>}
+                        {loggedIn && <li className="nav-item"><button className="btn btn-link nav-link" onClick={sagaLogout}>Выход</button></li>}
                     </ul>
                 </div>
             </div>
         </nav>
     );
 };
-const mapStateToProps = state => {
-    return { loggedIn: state.auth.loggedIn };
+const mapStateToProps = state =>
+{
+    return {loggedIn: state.auth.loggedIn};
 };
-export default connect(mapStateToProps, null)(Navigation);
+export default connect(mapStateToProps, {sagaLogout})(Navigation);

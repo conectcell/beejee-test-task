@@ -1,39 +1,48 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {commonHideError, commonHideSuccess} from "../../redux/actions/common-actions";
+import {commonHideError, commonHideSuccess} from "../../../redux/actions/common-actions";
 
 const AlertsHandler = ({children, success, error, commonHideSuccess, commonHideError}) =>
 {
 
-    useEffect(() => {
-        if(error != null){
-            setTimeout(() => {
+    useEffect(() =>
+    {
+        if (error != null)
+        {
+            setTimeout(() =>
+            {
                 commonHideError();
             }, 2000)
         }
     }, [error, commonHideError])
 
 
-    useEffect(() => {
-        if(success != null){
-            setTimeout(() => {
+    useEffect(() =>
+    {
+        if (success != null)
+        {
+            setTimeout(() =>
+            {
                 commonHideSuccess();
-            },2000)
+            }, 2000)
         }
     }, [success, commonHideSuccess])
 
 
-    const showError = () => {
-        if(typeof error === 'string') return (
+    const showError = () =>
+    {
+        if (typeof error === 'string') return (
             <div className="big-alert alert alert-danger">
                 {error}
             </div>
         )
-        else {
+        else if(Object.keys(error).length > 0)
+        {
             return (
                 <div className="big-alert alert alert-danger">
                     <ul>
-                        {Object.keys(error).map(k => {
+                        {Object.keys(error).map(k =>
+                        {
                             return (
                                 <li key={error[k]}>{error[k]}</li>
                             )
@@ -44,7 +53,7 @@ const AlertsHandler = ({children, success, error, commonHideSuccess, commonHideE
         }
     }
 
-    const showSuccess = () =>  (
+    const showSuccess = () => (
         <div className="big-alert alert alert-success">
             {success}
         </div>
@@ -59,8 +68,9 @@ const AlertsHandler = ({children, success, error, commonHideSuccess, commonHideE
     );
 };
 
-const mapStateToProps = state => {
-    return { success: state.common.globalSuccess, error: state.common.globalError };
+const mapStateToProps = state =>
+{
+    return {success: state.common.globalSuccess, error: state.common.globalError};
 };
 
 export default connect(mapStateToProps, {commonHideSuccess, commonHideError})(AlertsHandler);

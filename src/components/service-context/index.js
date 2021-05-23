@@ -1,7 +1,4 @@
-import {
-    ServiceProvider,
-    ServiceConsumer
-} from './service-context';
+import {ServiceConsumer, ServiceProvider} from './service-context';
 
 export {
     ServiceProvider,

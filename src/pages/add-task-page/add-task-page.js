@@ -1,17 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
-import {
-    commonHideLoader,
-    commonShowError,
-    commonShowLoader,
-    commonShowSuccess
-} from "../../redux/actions/common-actions";
 
 import Form from "../../components/forms/form";
 import compose from "../../utlis/compose";
 import {withService} from "../../components/hoc-helpers";
-import LoadingHanler from "../../components/loading-handler/loading-handler";
+import {sagaAddTask} from "../../redux/actions/saga-actions";
 
 const inputs = [
     {
@@ -50,11 +43,9 @@ const initialState = {
 };
 
 
-const AddTaskPage = ({service, commonShowLoader, commonHideLoader, commonShowSuccess, commonShowError}) =>
+const AddTaskPage = ({errors, sagaAddTask}) =>
 {
-    const history = useHistory();
 
-    const [errors, setErrors] = useState({});
 
     const createTask = ({username, email, text}) =>
     {
@@ -62,48 +53,21 @@ const AddTaskPage = ({service, commonShowLoader, commonHideLoader, commonShowSuc
         form.append("username", username);
         form.append("email", email);
         form.append("text", text);
+        sagaAddTask(form);
 
-        commonShowLoader();
-        service.addTask(form).then(({status, message}) =>
-        {
-            if (status === "ok")
-            {
-                commonShowSuccess("Задача успешно добавлена");
-                setTimeout(() => history.push("/"), 2000);
-            } else
-            {
-                commonHideLoader();
-                const errors = {...message};
-
-                const formErrors = {};
-                for (let {name} of inputs)
-                {
-                    if (errors[name])
-                    {
-                        formErrors[name] = errors[name];
-                        delete errors[name];
-                    }
-                }
-
-                setErrors(formErrors);
-                if (Object.keys(errors).length > 0) commonShowError(errors);
-
-            }
-        });
+        //TODO redirect on main page when task added
     }
 
     return (
-        <LoadingHanler>
-            <Form action={createTask} inputs={inputs} initialState={initialState} errors={errors} buttonText="Добавить"
-                  header="Добавление задачи"/>
-        </LoadingHanler>
+        <Form action={createTask} inputs={inputs} initialState={initialState} errors={errors} buttonText="Добавить" header="Добавление задачи"/>
     );
 };
 
+const mapStateToProps = state => ({errors: state.formErrors.addTaskFormErrors})
 
 
 export default compose(
-    connect(null, {commonShowLoader, commonHideLoader, commonShowSuccess, commonShowError}),
+    connect(mapStateToProps, {sagaAddTask}),
     withService()
 )(AddTaskPage);
 

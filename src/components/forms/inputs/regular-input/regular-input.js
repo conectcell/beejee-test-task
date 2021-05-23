@@ -5,19 +5,22 @@ const RegularInput = ({name, label, placeholder, type = 'text', value, errorText
 {
 
 
-
-    useEffect(() => {
+    useEffect(() =>
+    {
         changeInput(value);
     }, [value]);
 
-    const changeInput = (val) => {
+    const changeInput = (val) =>
+    {
         const validated = validate(val);
         changeInputValue(val, validated);
     };
 
-    const validate = (val) => {
+    const validate = (val) =>
+    {
 
-        switch (validator) {
+        switch (validator)
+        {
             case 'email':
                 return inputValidators.validateEmail(val);
             case 'required':
@@ -29,13 +32,16 @@ const RegularInput = ({name, label, placeholder, type = 'text', value, errorText
     };
 
 
-    const renderSelect = () => {
+    const renderSelect = () =>
+    {
         return (
-            <select className="form-control" id={name} aria-describedby={`${name}help`} placeholder={placeholder} onChange={e => changeInput(e.target.value)} defaultValue={value}>
+            <select className="form-control" id={name} aria-describedby={`${name}help`} placeholder={placeholder}
+                    onChange={e => changeInput(e.target.value)} defaultValue={value}>
                 {
-                    Object.keys(options).map(k => {
+                    Object.keys(options).map(k =>
+                    {
                         return (
-                            <option value={k} >{options[k]}</option>
+                            <option value={k}>{options[k]}</option>
                         )
                     })
                 }
@@ -44,7 +50,9 @@ const RegularInput = ({name, label, placeholder, type = 'text', value, errorText
     }
 
 
-    const renderInput = () => <input type={type} className="form-control" id={name} aria-describedby={`${name}help`} placeholder={placeholder} onChange={e => changeInput(e.target.value)} value={value}/>
+    const renderInput = () => <input type={type} className="form-control" id={name} aria-describedby={`${name}help`}
+                                     placeholder={placeholder} onChange={e => changeInput(e.target.value)}
+                                     value={value}/>
 
     return (
         <div className="form-group">

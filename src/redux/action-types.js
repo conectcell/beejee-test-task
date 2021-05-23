@@ -5,7 +5,21 @@ export const SHOW_ERROR = 'SHOW_ERROR';
 export const HIDE_ERROR = 'HIDE_ERROR';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
+export const SHOW_FORM_LOADER = 'SHOW_FORM_LOADER';
+export const HIDE_FORM_LOADER = 'HIDE_FORM_LOADER';
 
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const REDIRECT = 'REDIRECT';
+
+
+
+export const SET_LOGIN_FORM_ERRORS = 'SET_LOGIN_FORM_ERRORS';
+export const SET_ADD_TASK_FORM_ERRORS = 'SET_ADD_TASK_FORM_ERRORS';
+export const SET_EDIT_TASK_FORM_ERRORS = 'SET_EDIT_TASK_FORM_ERRORS';
+
+export const UPDATE_TASKS = 'UPDATE_TASKS';
+export const SET_TAKS_SEARCH_PARAMS = 'SET_TAKS_SEARCH_PARAMS';
+export const SET_TASKS_LIST = 'SET_TASKS_LIST';
+export const SET_TASKS_COUNT = 'SET_TASKS_COUNT';
